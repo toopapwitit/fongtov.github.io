@@ -309,48 +309,77 @@
       margin: 0;
     }
 
-.problem-card {
-  min-height: 390px;
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+    .problem-grid {
+      align-items: stretch;
+    }
 
-.problem-card h3 {
-  position: relative;
-  z-index: 2;
-  margin: 0;
-}
+    .problem-card {
+      min-height: 390px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-.problem-visual {
-  flex: 1;
-  min-height: 290px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-}
+    .problem-card h3 {
+      position: relative;
+      z-index: 2;
+      margin: 0;
+    }
 
-.staged-visual {
-  background-image:
-    linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.6)),
-    url("https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80");
-}
+    .problem-visual {
+      flex: 1;
+      min-height: 290px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.14);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
 
-.expensive-visual {
-  background-image:
-    linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.6)),
-    url("https://images.unsplash.com/photo-1579621970795-87facc2f976d?auto=format&fit=crop&w=900&q=80");
-}
+    .problem-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, transparent 58%, rgba(0,0,0,0.34)),
+        linear-gradient(135deg, rgba(255,255,255,0.10), transparent 38%);
+      pointer-events: none;
+      z-index: 2;
+    }
 
-.pressure-visual {
-  background-image:
-    linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.6)),
-    url("https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80");
-}
-    
+    .problem-visual svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.45s ease;
+    }
+
+    .problem-card:hover .problem-visual svg {
+      transform: scale(1.04);
+    }
+
+    .staged-visual {
+      background:
+        radial-gradient(circle at 50% 15%, rgba(245,193,108,0.42), transparent 32%),
+        linear-gradient(160deg, #181818, #050505 72%);
+    }
+
+    .expensive-visual {
+      background:
+        radial-gradient(circle at 76% 20%, rgba(245,193,108,0.28), transparent 26%),
+        linear-gradient(160deg, #16120c, #050505 74%);
+    }
+
+    .pressure-visual {
+      background:
+        radial-gradient(circle at 50% 32%, rgba(255,255,255,0.20), transparent 25%),
+        radial-gradient(circle at 18% 16%, rgba(245,193,108,0.22), transparent 24%),
+        linear-gradient(160deg, #1b1111, #050505 76%);
+    }
+
     .number {
       color: var(--accent);
       font-size: 13px;
@@ -368,17 +397,28 @@
     }
 
     .photo-panel {
-      min-height: 520px;
+      min-height: 720px;
       border-radius: 34px;
       border: 1px solid var(--line);
-      background:
-        linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.75)),
-        url("https://images.unsplash.com/photo-1513530534585-c7b1394c6d51?auto=format&fit=crop&w=1200&q=80");
-      background-size: cover;
-      background-position: center;
+      background: #050505;
       box-shadow: var(--shadow);
       position: relative;
       overflow: hidden;
+      isolation: isolate;
+    }
+
+    .photo-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 92px;
+      z-index: 1;
+      background:
+        linear-gradient(to bottom, transparent 45%, rgba(0,0,0,0.58)),
+        radial-gradient(circle at 50% 8%, rgba(245,193,108,0.14), transparent 36%);
+      pointer-events: none;
     }
 
     .photo-panel::after {
@@ -394,6 +434,63 @@
       border: 1px solid rgba(255,255,255,0.14);
       color: var(--text);
       font-weight: 700;
+      z-index: 2;
+    }
+
+    .portrait-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 92px;
+      width: 100%;
+      height: calc(100% - 92px);
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(1.04);
+      filter: contrast(1.04) saturate(0.95);
+      animation: portraitFade 30s ease-in-out infinite;
+    }
+
+    .portrait-slide:nth-child(1) {
+      object-position: center 40%;
+      animation-delay: 0s;
+    }
+
+    .portrait-slide:nth-child(2) {
+      object-position: center 38%;
+      animation-delay: 5s;
+    }
+
+    .portrait-slide:nth-child(3) {
+      object-position: 62% 42%;
+      animation-delay: 10s;
+    }
+
+    .portrait-slide:nth-child(4) {
+      object-position: 62% 48%;
+      animation-delay: 15s;
+    }
+
+    .portrait-slide:nth-child(5) {
+      object-position: 64% 45%;
+      animation-delay: 20s;
+    }
+
+    .portrait-slide:nth-child(6) {
+      object-position: 42% 54%;
+      animation-delay: 25s;
+    }
+
+    @keyframes portraitFade {
+      0%, 15% {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+      22%, 100% {
+        opacity: 0;
+        transform: scale(1.1);
+      }
     }
 
     .steps {
@@ -421,78 +518,116 @@
     }
 
     .pill {
-  min-width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(245,193,108,0.16);
-  color: var(--accent);
-  display: grid;
-  place-items: center;
-  position: relative;
-  overflow: hidden;
-  font-size: 24px;
-  box-shadow: inset 0 0 0 1px rgba(245,193,108,0.18);
-}
+      min-width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(245,193,108,0.16);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      font-size: 24px;
+      box-shadow: inset 0 0 0 1px rgba(245,193,108,0.18);
+    }
 
-.pill .emoji {
-  display: inline-block;
-  line-height: 1;
-  transform-origin: center bottom;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
-}
+    .pill .emoji {
+      display: inline-block;
+      line-height: 1;
+      transform-origin: center bottom;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
+    }
 
-.click-pill::after {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(245,193,108,0.8);
-  border-radius: 50%;
-  top: 11px;
-  right: 10px;
-  animation: clickPulse 1.35s ease-out infinite;
-}
+    .click-pill::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(245,193,108,0.8);
+      border-radius: 50%;
+      top: 11px;
+      right: 10px;
+      animation: clickPulse 1.35s ease-out infinite;
+    }
 
-.click-pill .emoji { animation: tapClick 1.35s ease-in-out infinite; }
-.shoot-pill .emoji { animation: photoSway 1.8s ease-in-out infinite; }
-.jump-pill .emoji { animation: happyJump 0.9s ease-in-out infinite; }
+    .click-pill .emoji {
+      animation: tapClick 1.35s ease-in-out infinite;
+    }
 
-.shoot-pill::after {
-  content: "☀️";
-  position: absolute;
-  top: 3px;
-  right: 5px;
-  font-size: 13px;
-  animation: sunPulse 2s ease-in-out infinite;
-}
+    .shoot-pill::after {
+      content: "☀️";
+      position: absolute;
+      top: 3px;
+      right: 5px;
+      font-size: 13px;
+      animation: sunPulse 2s ease-in-out infinite;
+    }
 
-@keyframes tapClick {
-  0%, 100% { transform: translateY(0) rotate(-8deg) scale(1); }
-  45% { transform: translateY(4px) rotate(-8deg) scale(0.9); }
-  60% { transform: translateY(0) rotate(-8deg) scale(1.08); }
-}
+    .shoot-pill .emoji {
+      animation: photoSway 1.8s ease-in-out infinite;
+    }
 
-@keyframes clickPulse {
-  0% { opacity: 0; transform: scale(0.2); }
-  42% { opacity: 0.95; }
-  100% { opacity: 0; transform: scale(1.7); }
-}
+    .jump-pill .emoji {
+      animation: happyJump 0.9s ease-in-out infinite;
+    }
 
-@keyframes photoSway {
-  0%, 100% { transform: translateY(0) rotate(-7deg); }
-  50% { transform: translateY(-4px) rotate(8deg); }
-}
+    @keyframes tapClick {
+      0%, 100% {
+        transform: translateY(0) rotate(-8deg) scale(1);
+      }
+      45% {
+        transform: translateY(4px) rotate(-8deg) scale(0.9);
+      }
+      60% {
+        transform: translateY(0) rotate(-8deg) scale(1.08);
+      }
+    }
 
-@keyframes sunPulse {
-  0%, 100% { transform: scale(0.9); opacity: 0.72; }
-  50% { transform: scale(1.15); opacity: 1; }
-}
+    @keyframes clickPulse {
+      0% {
+        opacity: 0;
+        transform: scale(0.2);
+      }
+      42% {
+        opacity: 0.95;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.7);
+      }
+    }
 
-@keyframes happyJump {
-  0%, 100% { transform: translateY(0) scaleY(1); }
-  35% { transform: translateY(-9px) scaleY(1.04); }
-  62% { transform: translateY(2px) scaleY(0.92); }
-}
+    @keyframes photoSway {
+      0%, 100% {
+        transform: translateY(0) rotate(-7deg);
+      }
+      50% {
+        transform: translateY(-4px) rotate(8deg);
+      }
+    }
+
+    @keyframes sunPulse {
+      0%, 100% {
+        transform: scale(0.9);
+        opacity: 0.72;
+      }
+      50% {
+        transform: scale(1.15);
+        opacity: 1;
+      }
+    }
+
+    @keyframes happyJump {
+      0%, 100% {
+        transform: translateY(0) scaleY(1);
+      }
+      35% {
+        transform: translateY(-9px) scaleY(1.04);
+      }
+      62% {
+        transform: translateY(2px) scaleY(0.92);
+      }
+    }
 
     .packages {
       display: grid;
@@ -609,7 +744,7 @@
       }
 
       .photo-panel {
-        min-height: 390px;
+        min-height: 650px;
       }
 
       .section {
@@ -654,32 +789,75 @@
 
   <main>
 
-```
 <section class="section" id="problem">
   <div class="section-inner reveal">
-    <span class="number">01. Problem Hypothesis</span>
-    <h2 class="section-title">Good photos matter, but is it good enough if your smile isn't real?</h2>
+    <span class="number">01 / Problem Hypothesis</span>
+    <h2 class="section-title">Good photos matter, but photoshoots often feel awkward.</h2>
     <p class="section-lead">
-      Many students and young professionals need strong personal images for online profiles, applications, creative portfolios, and social platforms. However, traditional studio sessions can feel too formal, too expensive, and too uncomfortable for people who do not feel comfortable posing.
+      Many students and young professionals need strong personal images for online profiles, applications, creative portfolios, and social platforms. However, traditional studio sessions can feel too formal, too expensive, and too uncomfortable for people who do not like posing.
     </p>
 
     <div class="grid problem-grid">
-  <article class="card problem-card">
-    <h3>Too staged</h3>
-    <div class="problem-visual staged-visual" role="img" aria-label="A stiff portrait pose under a bright studio spotlight."></div>
-  </article>
-
-  <article class="card problem-card">
-    <h3>Too expensive</h3>
-    <div class="problem-visual expensive-visual" role="img" aria-label="Coins falling out of an empty wallet."></div>
-  </article>
-
-  <article class="card problem-card">
-    <h3>Too much pressure</h3>
-    <div class="problem-visual pressure-visual" role="img" aria-label="A nervous person sweating in front of a camera."></div>
-  </article>
-</div>
-      </div>
+      <article class="card problem-card">
+        <h3>Too staged</h3>
+        <div class="problem-visual staged-visual" role="img" aria-label="A stiff portrait pose under a bright studio spotlight.">
+          <svg viewBox="0 0 320 280" aria-hidden="true">
+            <path d="M86 0h148l42 250H44L86 0Z" fill="rgba(245,193,108,0.16)" />
+            <path d="M76 238c48-18 119-18 168 0" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="3" />
+            <ellipse cx="160" cy="240" rx="82" ry="16" fill="rgba(0,0,0,0.42)" />
+            <circle cx="160" cy="78" r="34" fill="#f5c16c" />
+            <path d="M118 178c7-39 23-62 42-62s35 23 42 62l12 52H106l12-52Z" fill="#f5f5f5" />
+            <path d="M116 138 82 106M204 138l34-32" fill="none" stroke="#f5f5f5" stroke-width="14" stroke-linecap="round" />
+            <path d="M160 8v102M122 10l18 80M198 10l-18 80" fill="none" stroke="rgba(255,255,255,0.34)" stroke-width="2" stroke-linecap="round" />
+            <rect x="120" y="28" width="80" height="16" rx="8" fill="rgba(255,255,255,0.12)" />
+            <path d="M96 38h128" stroke="rgba(245,193,108,0.50)" stroke-width="3" stroke-linecap="round" />
+            <path d="M72 210h176" stroke="rgba(255,255,255,0.16)" stroke-width="2" stroke-dasharray="8 10" />
+          </svg>
+        </div>
+      </article>
+      <article class="card problem-card">
+        <h3>Too expensive</h3>
+        <div class="problem-visual expensive-visual" role="img" aria-label="Coins falling out of an empty wallet.">
+          <svg viewBox="0 0 320 280" aria-hidden="true">
+            <ellipse cx="164" cy="242" rx="104" ry="18" fill="rgba(0,0,0,0.42)" />
+            <path d="M78 139c30-26 106-33 166-8 16 7 24 20 20 38l-11 54c-4 18-18 29-37 29H87c-19 0-31-15-27-34l12-55c2-9 1-18 6-24Z" fill="#111" stroke="rgba(255,255,255,0.22)" stroke-width="3" />
+            <path d="M86 132c30-24 99-28 155-5l-12 44c-48-17-103-14-153 7l10-46Z" fill="rgba(245,193,108,0.18)" stroke="rgba(245,193,108,0.38)" stroke-width="3" />
+            <circle cx="235" cy="183" r="14" fill="#f5c16c" />
+            <circle cx="238" cy="183" r="5" fill="rgba(0,0,0,0.35)" />
+            <circle cx="97" cy="72" r="20" fill="#f5c16c" />
+            <circle cx="148" cy="52" r="16" fill="#f5c16c" opacity="0.82" />
+            <circle cx="215" cy="76" r="24" fill="#f5c16c" opacity="0.9" />
+            <circle cx="250" cy="112" r="14" fill="#f5c16c" opacity="0.72" />
+            <path d="M100 77c18 44 30 69 53 106M148 57c3 39 3 67 8 113M216 82c-23 39-37 65-54 104M250 116c-33 28-54 44-89 71" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2" stroke-dasharray="6 8" />
+            <path d="M130 209c22-10 57-11 78-1" fill="none" stroke="rgba(255,255,255,0.42)" stroke-width="4" stroke-linecap="round" />
+            <path d="M132 100h34a25 25 0 0 1 25 25v0a25 25 0 0 1-25 25h-34z" fill="rgba(255,255,255,0.12)" />
+            <circle cx="166" cy="125" r="13" fill="rgba(255,255,255,0.20)" />
+          </svg>
+        </div>
+      </article>
+      <article class="card problem-card">
+        <h3>Too much pressure</h3>
+        <div class="problem-visual pressure-visual" role="img" aria-label="A nervous person sweating while cameras and lights point at them.">
+          <svg viewBox="0 0 320 280" aria-hidden="true">
+            <rect x="31" y="67" width="76" height="47" rx="12" fill="rgba(255,255,255,0.14)" />
+            <circle cx="68" cy="91" r="18" fill="rgba(255,255,255,0.26)" />
+            <rect x="235" y="67" width="54" height="38" rx="10" fill="rgba(255,255,255,0.14)" />
+            <path d="M251 105 223 126M276 105l-18 35" stroke="rgba(255,255,255,0.20)" stroke-width="5" stroke-linecap="round" />
+            <path d="M80 98 132 132M240 94 188 132" stroke="rgba(245,193,108,0.32)" stroke-width="3" stroke-dasharray="8 9" />
+            <ellipse cx="160" cy="242" rx="80" ry="16" fill="rgba(0,0,0,0.42)" />
+            <path d="M104 224c8-42 28-68 56-68s48 26 56 68H104Z" fill="#f5f5f5" />
+            <circle cx="160" cy="114" r="42" fill="#f5c16c" />
+            <path d="M122 105c11-37 65-50 82-4-24-8-52-7-82 4Z" fill="#111" />
+            <circle cx="145" cy="116" r="4" fill="#070707" />
+            <circle cx="175" cy="116" r="4" fill="#070707" />
+            <path d="M145 141c10-8 22-8 32 0" fill="none" stroke="#070707" stroke-width="4" stroke-linecap="round" />
+            <path d="M211 101c13 15 16 30 8 44-13-11-16-27-8-44Z" fill="#8ed5ff" />
+            <path d="M221 151c9 11 11 22 5 32-10-8-12-20-5-32Z" fill="#8ed5ff" opacity="0.9" />
+            <path d="M96 44c-10 20-10 38 0 54M224 44c10 20 10 38 0 54" fill="none" stroke="rgba(245,193,108,0.45)" stroke-width="4" stroke-linecap="round" />
+            <path d="M139 184c13 9 28 9 42 0" fill="none" stroke="rgba(0,0,0,0.24)" stroke-width="4" stroke-linecap="round" />
+          </svg>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -687,40 +865,47 @@
 <section class="section" id="solution">
   <div class="section-inner split reveal">
     <div>
-      <span class="number">02. Solution Hypothesis</span>
+      <span class="number">02 / Solution Hypothesis</span>
       <h2 class="section-title">A relaxed street-style portrait experience.</h2>
       <p class="section-lead">
-        Fongtov Portraits turns street photography into a bookable personal portrait service. Instead of being trapped in a studio setup, the session uses real urban backgrounds, natural light, and simple guidance to create confident, authentic portraits. 
+        Fongtov Portraits turns street photography into a bookable personal portrait service. Instead of forcing people into a studio setup, the session uses real urban backgrounds, natural light, and simple guidance to create confident, authentic images.
       </p>
 
-     <div class="steps">
-  <div class="step">
-    <div class="pill click-pill" aria-hidden="true"><span class="emoji">👆</span></div>
-    <div>
-      <strong>Choose a session</strong>
-      <p>Book your affordable portrait slot through Calendly.</p>
-    </div>
-  </div>
+      <div class="steps">
+        <div class="step">
+          <div class="pill click-pill" aria-hidden="true"><span class="emoji">👆</span></div>
+          <div>
+            <strong>Choose a session</strong>
+            <p>Book your affordable portrait slot through Calendly.</p>
+          </div>
+        </div>
 
-  <div class="step">
-    <div class="pill shoot-pill" aria-hidden="true"><span class="emoji">📸</span></div>
-    <div>
-      <strong>Shoot outside</strong>
-      <p>Meet in an urban location and shoot in a casual, low-pressure way.</p>
-    </div>
-  </div>
+        <div class="step">
+          <div class="pill shoot-pill" aria-hidden="true"><span class="emoji">📸</span></div>
+          <div>
+            <strong>Shoot outside</strong>
+            <p>Meet in an urban location and shoot in a casual, low-pressure way.</p>
+          </div>
+        </div>
 
-  <div class="step">
-    <div class="pill jump-pill" aria-hidden="true"><span class="emoji">🙌</span></div>
-    <div>
-      <strong>Receive edited photos</strong>
-      <p>Get natural portraits that you want for LinkedIn, dating apps, portfolios, and social media.</p>
-    </div>
-  </div>
-</div>
+        <div class="step">
+          <div class="pill jump-pill" aria-hidden="true"><span class="emoji">🙌</span></div>
+          <div>
+            <strong>Receive edited photos</strong>
+            <p>Get natural portraits that you want for LinkedIn, dating apps, portfolios, and social media.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="photo-panel"></div>
+    <div class="photo-panel" aria-label="A rotating showcase of Fongtov portrait photos.">
+      <img class="portrait-slide" src="assets/portrait-01.jpg" alt="Outdoor portrait against a textured red wall.">
+      <img class="portrait-slide" src="assets/portrait-02.jpg" alt="Night street portrait with soft flash.">
+      <img class="portrait-slide" src="assets/portrait-03.jpg" alt="Urban action portrait of a skateboarder.">
+      <img class="portrait-slide" src="assets/portrait-04.jpg" alt="Cinematic cafe portrait in warm light.">
+      <img class="portrait-slide" src="assets/portrait-05.jpg" alt="Street portrait in front of warm city lights.">
+      <img class="portrait-slide" src="assets/portrait-06.jpg" alt="Relaxed outdoor street portrait under trees.">
+    </div>
   </div>
 </section>
 
@@ -754,29 +939,29 @@
     <span class="number">04. MVP Offer</span>
     <h2 class="section-title">Simple first packages.</h2>
     <p class="section-lead">
-      These packages are designed as an MVP to test whether people are willing to book casual outdoor portrait sessions.
+      Flexible outdoor portrait sessions for solo portraits, couples, and small groups.
     </p>
 
     <div class="packages">
       <div class="card">
-        <h3>Mini Portrait</h3>
+        <h3>Outdoor Mini Portrait</h3>
+        <div class="price">€45</div>
+        <p>1 hour outdoor portrait session for people who need natural personal photos.</p>
+        <p class="small">Upgrade to 1hr30 for €60.</p>
+      </div>
+
+      <div class="card">
+        <h3>Group or Couple Session</h3>
         <div class="price">€50</div>
-        <p>Short outdoor session for people who need a few strong personal photos.</p>
-        <p class="small">Ideal for LinkedIn, dating apps, and social media.</p>
+        <p>1 hour session for couples, friends, or small groups who want portraits together.</p>
+        <p class="small">Upgrade to 1hr30 for €65.</p>
       </div>
 
       <div class="card">
-        <h3>Street Session</h3>
-        <div class="price">€60</div>
-        <p>A relaxed urban portrait experience with more variety in location and mood.</p>
-        <p class="small">Best MVP package for early customers.</p>
-      </div>
-
-      <div class="card">
-        <h3>Creative Add-on</h3>
-        <div class="price">+€15</div>
-        <p>Extra edited photos or a more cinematic color-grading style.</p>
-        <p class="small">Optional upsell after validation.</p>
+        <h3>Editing Add-on</h3>
+        <div class="price">+€20</div>
+        <p>Add edited photos after the photoshoot for a more polished final look.</p>
+        <p class="small">Available for solo, couple, and group sessions.</p>
       </div>
     </div>
   </div>
@@ -784,7 +969,7 @@
 
 <section class="section" id="pitch">
   <div class="section-inner reveal">
-    <span class="number">05. Pitch Video</span>
+    <span class="number">05 / Pitch Video</span>
     <h2 class="section-title">Watch the 45-second MVP pitch.</h2>
     <p class="section-lead">
       The pitch video explains the value proposition, target audience, and call-to-action for Fongtov Portraits.
@@ -808,7 +993,7 @@
 
 <section class="final-cta" id="book">
   <div class="reveal">
-    <span class="number">06. Call to Action</span>
+    <span class="number">06 / Call to Action</span>
     <h2>Ready for portraits that feel like you?</h2>
     <p>
       Book a relaxed outdoor portrait session and be a part of Fongtov Portraits.
@@ -816,7 +1001,6 @@
     <a class="btn btn-primary" href="https://calendly.com/tuto00001-htwsaar/30min">Book right now</a>
   </div>
 </section>
-```
 
   </main>
 
