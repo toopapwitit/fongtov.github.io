@@ -421,15 +421,78 @@
     }
 
     .pill {
-      min-width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: rgba(245,193,108,0.16);
-      color: var(--accent);
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-    }
+  min-width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(245,193,108,0.16);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  font-size: 24px;
+  box-shadow: inset 0 0 0 1px rgba(245,193,108,0.18);
+}
+
+.pill .emoji {
+  display: inline-block;
+  line-height: 1;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35));
+}
+
+.click-pill::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(245,193,108,0.8);
+  border-radius: 50%;
+  top: 11px;
+  right: 10px;
+  animation: clickPulse 1.35s ease-out infinite;
+}
+
+.click-pill .emoji { animation: tapClick 1.35s ease-in-out infinite; }
+.shoot-pill .emoji { animation: photoSway 1.8s ease-in-out infinite; }
+.jump-pill .emoji { animation: happyJump 0.9s ease-in-out infinite; }
+
+.shoot-pill::after {
+  content: "☀️";
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  font-size: 13px;
+  animation: sunPulse 2s ease-in-out infinite;
+}
+
+@keyframes tapClick {
+  0%, 100% { transform: translateY(0) rotate(-8deg) scale(1); }
+  45% { transform: translateY(4px) rotate(-8deg) scale(0.9); }
+  60% { transform: translateY(0) rotate(-8deg) scale(1.08); }
+}
+
+@keyframes clickPulse {
+  0% { opacity: 0; transform: scale(0.2); }
+  42% { opacity: 0.95; }
+  100% { opacity: 0; transform: scale(1.7); }
+}
+
+@keyframes photoSway {
+  0%, 100% { transform: translateY(0) rotate(-7deg); }
+  50% { transform: translateY(-4px) rotate(8deg); }
+}
+
+@keyframes sunPulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.72; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes happyJump {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  35% { transform: translateY(-9px) scaleY(1.04); }
+  62% { transform: translateY(2px) scaleY(0.92); }
+}
 
     .packages {
       display: grid;
@@ -627,34 +690,34 @@
       <span class="number">02. Solution Hypothesis</span>
       <h2 class="section-title">A relaxed street-style portrait experience.</h2>
       <p class="section-lead">
-        Fongtov Portraits turns street photography into a bookable personal portrait service. Instead of forcing people into a studio setup, the session uses real urban backgrounds, natural light, and simple guidance to create confident, authentic images.
+        Fongtov Portraits turns street photography into a bookable personal portrait service. Instead of being trapped in a studio setup, the session uses real urban backgrounds, natural light, and simple guidance to create confident, authentic portraits. 
       </p>
 
-      <div class="steps">
-        <div class="step">
-          <div class="pill">1</div>
-          <div>
-            <strong>Choose a session</strong>
-            <p>Book an affordable portrait slot through Calendly.</p>
-          </div>
-        </div>
+     <div class="steps">
+  <div class="step">
+    <div class="pill click-pill" aria-hidden="true"><span class="emoji">👆</span></div>
+    <div>
+      <strong>Choose a session</strong>
+      <p>Book your affordable portrait slot through Calendly.</p>
+    </div>
+  </div>
 
-        <div class="step">
-          <div class="pill">2</div>
-          <div>
-            <strong>Shoot outside</strong>
-            <p>Meet in an urban location and shoot in a casual, low-pressure way.</p>
-          </div>
-        </div>
+  <div class="step">
+    <div class="pill shoot-pill" aria-hidden="true"><span class="emoji">📸</span></div>
+    <div>
+      <strong>Shoot outside</strong>
+      <p>Meet in an urban location and shoot in a casual, low-pressure way.</p>
+    </div>
+  </div>
 
-        <div class="step">
-          <div class="pill">3</div>
-          <div>
-            <strong>Receive edited photos</strong>
-            <p>Get natural portraits that can be used for LinkedIn, dating apps, portfolios, and social media.</p>
-          </div>
-        </div>
-      </div>
+  <div class="step">
+    <div class="pill jump-pill" aria-hidden="true"><span class="emoji">🙌</span></div>
+    <div>
+      <strong>Receive edited photos</strong>
+      <p>Get natural portraits that you want for LinkedIn, dating apps, portfolios, and social media.</p>
+    </div>
+  </div>
+</div>
     </div>
 
     <div class="photo-panel"></div>
@@ -664,9 +727,9 @@
 <section class="section">
   <div class="section-inner reveal">
     <span class="number">03. Benefits</span>
-    <h2 class="section-title">Why it works for the target group.</h2>
+    <h2 class="section-title">Why this might just be the best option for you!!!</h2>
     <p class="section-lead">
-      The service sits between casual smartphone pictures and expensive studio photography: more professional than random phone photos, but more relaxed and accessible than a traditional photoshoot.
+      Our service sits between casual smartphone pictures and expensive studio photography: more professional than random phone photos, but more relaxed and accessible than a traditional photoshoot.
     </p>
 
     <div class="grid">
@@ -676,11 +739,11 @@
       </div>
       <div class="card">
         <h3>Accessible</h3>
-        <p>Mini-sessions from around €50–60 make the service realistic for students and young professionals.</p>
+        <p>Mini-sessions from around €45–€90 make the service realistic for not just students and young professionals.</p>
       </div>
       <div class="card">
         <h3>Easy to book</h3>
-        <p>The landing page and Calendly link make the MVP simple to test and validate.</p>
+        <p>You can easily try out our first session anytime you are free.</p>
       </div>
     </div>
   </div>
